@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import AnimatedContainer from '@/components/AnimatedContainer';
 import Logo from '@/components/Logo';
-import { Shield, User, ArrowRight } from 'lucide-react';
+import { Shield, User, ArrowRight, FileText } from 'lucide-react';
 
 const Index = () => {
   return (
