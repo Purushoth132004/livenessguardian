@@ -38,7 +38,7 @@ const Login = () => {
     },
   });
 
-  const onSubmitAadhaar = async () => {
+  const onSubmitAadhaar = () => {
     // Get the current form values
     const aadhaarValue = form.getValues('aadhaar');
     
@@ -64,7 +64,7 @@ const Login = () => {
     }, 1500);
   };
 
-  const onVerifyOtp = async (data: FormData) => {
+  const onVerifyOtp = (data: FormData) => {
     setIsLoading(true);
     
     // Simulate OTP verification
@@ -81,8 +81,8 @@ const Login = () => {
     }, 1500);
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     
     if (otpSent) {
       const data = form.getValues();
