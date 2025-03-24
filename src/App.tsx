@@ -13,25 +13,26 @@ import AdminLogin from "./pages/AdminLogin";
 import Admin from "./pages/Admin";
 import AdminPensioners from "./pages/AdminPensioners";
 import NotFound from "./pages/NotFound";
+import PageTransition from "./components/PageTransition";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
       <BrowserRouter>
+        <Toaster />
+        <Sonner />
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/face-verification" element={<FaceVerification />} />
-          <Route path="/liveness-detection" element={<LivenessDetection />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/admin-login" element={<AdminLogin />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/admin/pensioners" element={<AdminPensioners />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+          <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
+          <Route path="/face-verification" element={<PageTransition><FaceVerification /></PageTransition>} />
+          <Route path="/liveness-detection" element={<PageTransition><LivenessDetection /></PageTransition>} />
+          <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
+          <Route path="/admin-login" element={<PageTransition><AdminLogin /></PageTransition>} />
+          <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
+          <Route path="/admin/pensioners" element={<PageTransition><AdminPensioners /></PageTransition>} />
+          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
