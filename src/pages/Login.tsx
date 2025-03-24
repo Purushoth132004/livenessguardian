@@ -38,7 +38,18 @@ const Login = () => {
     },
   });
 
-  const onSubmitAadhaar = async (data: FormData) => {
+  const onSubmitAadhaar = async () => {
+    // Get the current form values
+    const aadhaarValue = form.getValues('aadhaar');
+    
+    // Validate Aadhaar number manually
+    if (aadhaarValue.length !== 12 || !/^\d+$/.test(aadhaarValue)) {
+      form.setError('aadhaar', { 
+        message: 'Please enter a valid 12-digit Aadhaar number' 
+      });
+      return;
+    }
+    
     setIsLoading(true);
     
     // Simulate API call to send OTP
@@ -48,7 +59,7 @@ const Login = () => {
       
       toast({
         title: "OTP Sent Successfully",
-        description: `A verification code has been sent to the phone number linked with Aadhaar ${data.aadhaar}`,
+        description: `A verification code has been sent to the phone number linked with Aadhaar ${aadhaarValue}`,
       });
     }, 1500);
   };
@@ -70,6 +81,24 @@ const Login = () => {
     }, 1500);
   };
 
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    
+    if (otpSent) {
+      const data = form.getValues();
+      // Validate OTP
+      if (!data.otp || data.otp.length !== 6 || !/^\d+$/.test(data.otp)) {
+        form.setError('otp', {
+          message: 'Please enter a valid 6-digit OTP'
+        });
+        return;
+      }
+      onVerifyOtp(data);
+    } else {
+      onSubmitAadhaar();
+    }
+  };
+
   return (
     <AuthLayout 
       title={otpSent ? "Verify OTP" : "Pensioner Login"} 
@@ -79,7 +108,7 @@ const Login = () => {
       }
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(otpSent ? onVerifyOtp : onSubmitAadhaar)} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {!otpSent ? (
             <FormField
               control={form.control}
